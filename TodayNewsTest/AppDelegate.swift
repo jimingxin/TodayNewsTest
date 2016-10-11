@@ -9,16 +9,35 @@
 import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate,UITabBarControllerDelegate {
 
     var window: UIWindow?
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+
+        //创建 关键根控制器
+        window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        // 检测用户是不是第一次启动
+        print(NSUserDefaults.standardUserDefaults().boolForKey(YMFirstLaunch))
+        if !NSUserDefaults.standardUserDefaults().boolForKey(YMFirstLaunch) {
+            //是第一次启动
+            window?.rootViewController = YMFirstIntroduceController()
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: YMFirstLaunch)
+        }else{
+            let tabBarController = YMTabBarController()
+            tabBarController.delegate = self
+            window?.rootViewController = tabBarController
+        }
+        window?.makeKeyAndVisible()
         return true
     }
 
+    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+        //发出通知
+        NSNotificationCenter.defaultCenter().postNotificationName(YMTabBarDidSelectedNotification, object: nil,userInfo: nil)
+    }
+    
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

@@ -20,7 +20,27 @@ class YMFirstIntroduceController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+ 
     
+    @IBAction func mobileButtonClick(sender: UIButton) {
+        
+    }
+    
+    @IBAction func wechatButtonClick(sender: UIButton) {
+        
+    }
+    
+    @IBAction func QQButtonClick(sender: UIButton) {
+        
+    }
+    
+    @IBAction func weiboButtonClick(sender: UIButton) {
+        
+    }
+    
+    @IBAction func enterButtonClick(sender: UIButton) {
+        UIApplication.sharedApplication().keyWindow?.rootViewController = YMTabBarController()
+    }
 
     /*
     // MARK: - Navigation

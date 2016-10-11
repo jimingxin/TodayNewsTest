@@ -24,8 +24,76 @@ class YMPopViewAnimator: NSObject,UIViewControllerTransitioningDelegate,UIViewCo
      */
     func presentationControllerForRresentedViewController(presented:UIViewController,presentingViewController presenting:UIViewController,sourceViewController source:UIViewController) -> UIPresentationController {
         
+        let popPC = YMPopPresentationController(presentedViewController: presented, presentingViewController: presenting)
+        popPC.presentFrame = presentFrame
+        return popPC
         
-        
+    }
+    
+    /**
+     告诉系统谁来负责 modal 的展示动画
+     
+     - parameter presented:  被展现的视图
+     - parameter presenting: 展现的视图
+     - parameter source:
+     
+     - returns: 有谁管理
+     */
+    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        isPresent = true
+        return self
+    }
+    
+    /**
+     告诉系统谁来负责 modal 的消失动画
+     
+     - parameter animator: 消失的控制器
+     
+     - returns: 由谁控制
+     */
+    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        isPresent = false
+        return self
+    }
+
+    // MARK: -UIViewControllerAnimatedTransitioning
+    // MARK: - 只要实现了下面两个方法，那么系统默认就没有了，所有东西都需要自己实现
+    /**
+     动画时长
+     
+     - parameter transitionContext: <#transitionContext description#>
+     
+     - returns: <#return value description#>
+     */
+    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+        return 0.5
+    }
+    
+    /** 负责转场动画的效果*/
+    func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
+        if isPresent {
+            // 展开
+            let toView = transitionContext.viewForKey(UITransitionContextToViewKey)
+            // 一定要将视图添加到容器上
+            transitionContext.containerView()?.addSubview(toView!)
+            // 锚点
+            toView?.layer.anchorPoint = CGPoint(x: 1.0, y: 0.0)
+            toView?.transform = CGAffineTransformMakeScale(0.0, 0.0)
+            UIView.animateWithDuration(transitionDuration(transitionContext), delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                toView?.transform = CGAffineTransformIdentity
+                }, completion: { (_) in
+                    transitionContext.completeTransition(true)
+            })
+        } else {
+            // 关闭
+            let fromView = transitionContext.viewForKey(UITransitionContextFromViewKey)
+            // CGFloat 是不准确的，如果写 0.0 会没有动画
+            UIView.animateWithDuration(transitionDuration(transitionContext), animations: {
+                fromView?.transform = CGAffineTransformMakeScale(0.000001, 0.000001)
+                }, completion: { (_) in
+                    transitionContext.completeTransition(true)
+            })
+        }
     }
 
     

@@ -125,10 +125,10 @@ extension YMHomeTopicController: UITextFieldDelegate {
     // MARK: - UITextFieldDelegate
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
         // 创建搜索内容控制器
-        let searchContentVC = YMSearchContentViewController()
+        //let searchContentVC = YMSearchContentViewController()
 //        searchContentVC.delegate = self
-        let nav = YMNavigationController(rootViewController: searchContentVC)
-        presentViewController(nav, animated: false, completion: nil)
+        //let nav = YMNavigationController(rootViewController: searchContentVC)
+        //presentViewController(nav, animated: false, completion: nil)
         return true
     }
     

@@ -88,7 +88,7 @@ class YMNetworkTool: NSObject {
             let nowTime = NSDate().timeIntervalSince1970
             Alamofire.request(.GET, url,parameters: parames).responseJSON(completionHandler: { (response) in
                 tableView.mj_header.endRefreshing()
-                guard response.result.isFailure else {
+                guard response.result.isSuccess else {
                     SVProgressHUD.showErrorWithStatus("加载失败...")
                     return
                 }
