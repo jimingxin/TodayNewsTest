@@ -1,14 +1,14 @@
 //
-//  YMVideoTopicControllerViewController.swift
+//  YMVideoDetailController.swift
 //  TodayNewsTest
 //
-//  Created by 嵇明新 on 2016/10/14.
+//  Created by 嵇明新 on 2016/10/24.
 //  Copyright © 2016年 lanhe. All rights reserved.
 //
 
 import UIKit
 
-class YMVideoTopicControllerViewController: UIViewController {
+class YMVideoDetailController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

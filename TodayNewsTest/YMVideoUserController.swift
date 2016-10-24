@@ -8,12 +8,23 @@
 
 import UIKit
 
-class YMVideoUserControllerViewController: UIViewController {
+class YMVideoUserController: UIViewController {
 
+    var mediaInfo: YMMediaInfo?
+    
+    @IBOutlet weak var webView: UIWebView!
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        
+        navigationController?.navigationBarHidden = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,6 +32,7 @@ class YMVideoUserControllerViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    private lazy var headerView: YMuser
 
     /*
     // MARK: - Navigation
